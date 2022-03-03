@@ -17,7 +17,7 @@ sio.emit("stream_text", {'data':"language", "id": "sio.id"});
 
 
 // recive data from the server
-sio.on("stream_asl", (pyload)=>{
+sio.on("stream_text", (pyload)=>{
   console.log('receive done ', pyload["id"]);
   document.getElementById("stream_asl").src =  "data:image/jpeg;base64," +arrayBufferToBase64(pyload["data"]);
 
