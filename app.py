@@ -1,0 +1,31 @@
+import socketio
+from preprocess import Sign_predict, Sign_text
+
+sio = socketio.Server(cors_allowed_origins="*")
+app = socketio.WSGIApp(sio, static_files={
+    '/':'./public/'})
+text_to_sign = Sign_text()
+sign_predict = Sign_predict()
+
+@sio.event
+def connect(sid, environ):
+    print(f'[INFO] client connected: {sid}')
+
+@sio.event
+def disconnect(sid):
+    print(f'[INFO] client disconnected: {sid}') 
+
+@sio.event
+def stream_text(sid, data):
+    """ 
+        INPUT: sid, txt
+        OUTPUT: emit signs frames for the recived text
+    """
+    for sign_frame in text_to_sign.sign_gen(data["data"]):
+        sio.emit("stream_asl", {'data': sign_frame, "id":data["id"]}, to=sid) 
+    sio.emit("send", to=sid)
+   
+@sio.event
+def stream_sign(sid, data):
+    pred = sign_predict.sign_predict(data["landmarks"])
+    sio.emit("sign_txt", {"text": pred},to= sid)
