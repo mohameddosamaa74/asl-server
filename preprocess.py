@@ -95,7 +95,7 @@ class Sign_text():
                 for i in range(10):
                         success, frame = vid.read()  # read the camera frame
                 # while True:
-                for i in range(50):     
+                for i in range(60):     
                     success, frame = vid.read()  # read the camera frame
                     if not success:
                         break
@@ -112,7 +112,8 @@ class Sign_text():
 
 
 class Sign_predict():
-    clf = joblib.load('model.pkl')
+    checkpoints = 'model.pkl'
+    clf = joblib.load(checkpoints)
 
     def sign_predict(self, landmarks):
         try:
