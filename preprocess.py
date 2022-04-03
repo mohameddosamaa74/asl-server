@@ -100,7 +100,11 @@ class Sign_text():
                     if not success:
                         break
                     else:
+<<<<<<< HEAD
 #                        time.sleep(0.01)  
+=======
+#                         time.sleep(0.01)  
+>>>>>>> bab8ab6af95eb0f1aafbf4b3823a9123be21ddeb
                         width = int((frame.shape[1])*0.50)
                         height = int((frame.shape[0])*0.50)  
                         frame = cv2.resize(frame, (width, height), interpolation=cv2.INTER_AREA) 
